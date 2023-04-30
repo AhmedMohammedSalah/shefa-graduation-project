@@ -15,7 +15,7 @@ class TestCreateView(UserPassesTestMixin,LoginRequiredMixin,CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     def test_func(self):
-            return self.request.user.is_patient
+        return self.request.user.is_patient or self.request.user.is_lab_specialist 
     def get_success_url(self):
         return reverse('medicalAnalysis:login_home')
     
@@ -31,3 +31,5 @@ def home (request):
     elif request.user.is_lab_specialist:
         context = {}
         return render(request, 'lab_specialist.html', context)
+    
+    

@@ -17,5 +17,6 @@ class MedicalTest(models.Model):
     title=models.CharField( max_length=30)
     image=models.ImageField( upload_to=image_upload, height_field=None, width_field=None, max_length=None)
     upload_date=models.DateTimeField( auto_now=True, auto_now_add=False)
+    
     def __str__(self):
         return ( self.title)

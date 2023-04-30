@@ -16,6 +16,7 @@ class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(null=True, blank=True)
     phone =models.CharField( max_length=11,null=True, blank=True)
     specialist=models.CharField(max_length=50,blank=True, null=True)
+    
 class City(models.Model):
     name = models.CharField(max_length=30)
     def __str__(self):

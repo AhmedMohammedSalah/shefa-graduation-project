@@ -14,9 +14,10 @@ class MedicalTest(models.Model):
         ("anemia-hada", "أنيميا حادة "),)
     test_type=models.CharField(max_length=50, choices=test_types, default="anemia")
     user=models.ForeignKey( CustomUser,on_delete=models.CASCADE)
-    title=models.CharField( max_length=30)
+    title=models.CharField( max_length=30) 
     image=models.ImageField( upload_to=image_upload, height_field=None, width_field=None, max_length=None)
     upload_date=models.DateTimeField( auto_now=True, auto_now_add=False)
+    result = models.BooleanField(blank=True,null=True)
     
     def __str__(self):
-        return ( self.title)
+        return ( str(self.title) )

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts','bootstrap4','medicalAnalysis',
     'crispy_forms',
-'crispy_bootstrap5',
+'crispy_bootstrap5','contact'
 ]
 
 MIDDLEWARE = [
@@ -135,3 +135,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "accounts.CustomUser"
 LOGIN_REDIRECT_URL = "medicalAnalysis:login_home"  
 LOGOUT_REDIRECT_URL = "home" 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'amhmdslah104@gmail.com'
+EMAIL_HOST_PASSWORD = 'hiqemutlvppanmwp'  # past the key or password app here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = '587'

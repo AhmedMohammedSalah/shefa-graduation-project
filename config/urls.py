@@ -20,10 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("accounts/", include("accounts.urls")), 
+    path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),  
     path("", TemplateView.as_view(template_name="home.html"), name="home"), 
     path('medicalAnalysis/',  include('medicalAnalysis.urls',namespace='medicalAnalysis')),
+    path("about/", TemplateView.as_view(template_name="about.html"),name="about"),
+    path("contact-us/", include("contact.urls")), 
     
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

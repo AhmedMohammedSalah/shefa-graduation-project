@@ -3,17 +3,7 @@
 {% load crispy_forms_tags %} 
 {% load static %}
 {%block body %} 
-{% if errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %} {% if next %} {% if user.is_authenticated %}
-<p>
-  Your account doesn't have access to this page. To proceed, please login with
-  an account that has access.
-</p>
-{% else %}
-<p>Please login to see this page.</p>
-{% endif %} 
-{% endif %}
+
 <div class="container">
     <div class="row">
         <div class="col d-xxl-flex justify-content-xxl-center align-items-xxl-center">
@@ -88,7 +78,12 @@
                                                             <div class="mb-3">
                                                                 <button class="btn btn-primary d-block w-100" type="submit"  >تسجيل الدخول</button>
                                                                 <a href="{% url 'password_reset' %}" target="_blank"><br><span style="color: rgba(33, 37, 41, 0.75);">نسيت كلمة المرور؟</span></a></div>
+                                                        {% if errors %}
+                                                        <p style="color:red">Your username and password didn't match. Please try again.</p>
+                                                        {% endif %} 
                                                         </form>
+
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

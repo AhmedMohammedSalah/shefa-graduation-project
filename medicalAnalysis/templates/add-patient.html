@@ -1,0 +1,118 @@
+{% extends 'lab_specialist.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %} 
+{% block body %}
+
+        <div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+            <div style="width: 200px;"><img src="{% static 'assets/img/Add files-rafiki.svg' %}" style="margin-bottom: 8px;"></div>
+            <div style="margin-bottom: 8px;">
+                <h2 class="text-center">اضافة مريض جديد</h2>
+               </div><br>
+                <form method="post">
+                    {% csrf_token %}
+               <div class="d-lg-flex flex-column align-items-lg-center" style="margin-bottom: 16px;">
+                
+                <div>
+                    {{form.username|as_crispy_field}}
+                    {% comment %} <input type="text" name="userName" placeholder="اسم المستخدم" required style="margin: 8px;"> {% endcomment %}
+                </div>
+                            <div >
+                                
+                                {{form.password1|as_crispy_field}}
+                                <br>
+                                {{form.password2|as_crispy_field}}
+                                {% comment %} <input  type="password" name="Password" placeholder="كلمة المرور" required style="margin: 8px;"> {% endcomment %}
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" type="submit" onclick="alert('تم اضافة المريض')">اضافه&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-plus-square">
+                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"></path>
+                                    </svg></button></div>
+            </div>
+        </form>
+        </div>
+
+    
+    
+
+    <script>
+        //////////////////////logout
+        function logout() {
+          window.location.href = "../Homepage/Home.html";
+        }
+
+          
+      function searchTable() {
+          var input, filter, table, tr, td, i, j;
+          input = document.getElementById("search-input");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("my-table");
+          tr = table.getElementsByTagName("tr");
+
+          for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td");
+              for (j = 0; j < td.length; j++) {
+                  if (td[j] && td[j].textContent) {
+                      if (td[j].textContent.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                          break;
+                      } else {
+                          tr[i].style.display = "none";
+                          
+                      }
+                  }
+              }
+          }
+      }
+
+
+
+      ///////////////send
+
+
+      function searchData() {
+          var input, filter, table, tr, td, i, j;
+          input = document.getElementById("sendd");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("modal-1");
+          tr = table.getElementsByTagName("tr");
+
+          for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td");
+              for (j = 0; j < td.length; j++) {
+                  if (td[j] && td[j].textContent) {
+                      if (td[j].textContent.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                          break;
+                      } else {
+                          tr[i].style.display = "none";
+                          
+                      }
+                  }
+              }
+          }
+      }
+
+
+
+      ///delete row
+
+      function deleteRow(btn) {
+          var row = btn.parentNode.parentNode;
+          row.parentNode.removeChild(row);
+          }
+      
+
+
+          ////////////  select all check box
+          function checkToggle(source) {
+          var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          for (var i = 0; i < checkboxes.length; i++) {
+              if (checkboxes[i] != source)
+                  checkboxes[i].checked = source.checked;
+          }
+      }
+  </script>
+
+  {% endblock body %}

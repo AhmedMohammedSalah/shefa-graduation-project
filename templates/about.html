@@ -1,0 +1,52 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+    <div class="container py-4 py-xl-5" style="margin: 60px 0px 20px 0px;">
+        <div class="row gy-4 gy-md-0 d-lg-flex justify-content-lg-center align-items-lg-center">
+            <div class="col-md-6 d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+                <div class="text-center" style="margin: 0px;">
+                    <h2 class="text-uppercase fw-bold text-center">مرحباً بك في <span style="color: #049DD9;">شِفا</span></h2>
+                    <p class="text-center my-3">الحل الأمثل لفهم وتوصيل الفحوصات الطبية</p>
+                    <a class="btn btn-lg me-2" role="button" style="background-color: #049DD9;color: white;" href="register.html">الانضمام إلى شِفا</a>
+                    <a class="btn btn-outline-link btn-lg" role="button" href="../assets/img/shefa ui Video.mp4">مشاهدة الفيديو&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" width="1em" height="1em" fill="currentColor"><path d="M188.3 147.1C195.8 142.8 205.1 142.1 212.5 147.5L356.5 235.5C363.6 239.9 368 247.6 368 256C368 264.4 363.6 272.1 356.5 276.5L212.5 364.5C205.1 369 195.8 369.2 188.3 364.9C180.7 360.7 176 352.7 176 344V167.1C176 159.3 180.7 151.3 188.3 147.1V147.1zM512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256zM256 48C141.1 48 48 141.1 48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48z"></path></svg></a>
+                </div>
+            </div>
+            <div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+                <div><img class="d-lg-flex flex-column justify-content-lg-center align-items-lg-end" src="{% static 'assets/img/9503%20[Converted].png' %}" style="width: 400px;margin: 0px 140px 0px 0px;"></div>
+            </div>
+        </div>
+    </div>
+    <h2 class="text-center">يقوم&nbsp;<span style="color: rgb(4, 157, 217);">شِفا</span>&nbsp;بمساعدة كلا من المريض والمختبرات الطبيه والطبيب</h2>
+    <div class="container py-4 py-xl-5">
+        <div class="row">
+            <div class="col-md-8 col-xl-6 mx-auto p-4" style="padding-right: 0px;width: 900px;">
+                <div class="d-flex align-items-center align-items-md-center align-items-xl-center">
+                    <div class="d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon" style="height: 200px;width: 200px;"><img src="{% static 'assets/img/Oncology%20patient-amico.svg' %}"></div>
+                    <div class="text-center ms-auto">
+                        <h4>يقوم بمساعدة المريض في</h4>
+                        <p>الحصول علي تقرير مبني بالذكاء الاصطناعي لفهم التحاليل الطبي<br>&nbsp; &nbsp;وجود سجل طبي لكل مريض به كل التحاليل والتقارير الطبيه السابقه<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; استلام نتائج التحاليل من المنزل بدون الحاجه للذهاب الي معمل التحاليل مره اخرى<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;وجود اطباء متخصصين لمراجعة التقارير الطبيه التي تم الحصول عليها بالذكاء الاصطناعي</p><a href="#"></a>
+                    </div>
+                </div>
+                <hr class="my-5">
+                <div class="d-flex align-items-center align-items-md-center align-items-xl-center">
+                    <div class="me-auto">
+                        <h4 class="text-center">يقوم بمساعدة المختبرات الطبيه في</h4>
+                        <p class="text-center">اضافة مريض جديد الي الموقع<br>&nbsp;ارسال التحاليل الي المريض بسهوله تامه</p><a href="#"></a>
+                    </div>
+                    <div class="d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon" style="height: 200px;width: 200px;"><img src="{% static 'assets/img/Laboratory-amico.svg' %}"></div>
+                </div>
+                <hr class="my-5">
+                <div class="d-flex align-items-center align-items-md-center align-items-xl-center">
+                    <div class="d-flex flex-shrink-0 justify-content-center align-items-center me-4 d-inline-block bs-icon" style="height: 200px;width: 200px;"><img src="{% static 'assets/img/Doctor-amico.svg' %}"></div>
+                    <div class="ms-auto">
+                        <h4 class="text-center">يقوم بمساعدة الطبيب في</h4>
+                        <p class="text-center">مراجعة وتقييم التقارير الطبيه التي تم الحصول عليها بالذكاء الاصطناعي<br>الاطلاع علي كل التحاليل الطبيه السابقه للمريض عن طريق السجل الطبي</p><a href="#"></a>
+                    </div>
+                </div>
+                <hr class="my-5">
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

@@ -10,7 +10,7 @@
         <div class="col">
             <div class="text-center" style="margin-top: 155px;margin-bottom: 48px;">
                 <h1 style="text-align: center;font-size: 30px;">التسجيل كمستخدم جديد</h1>
-                <p style="text-align: center;">هل لديك حساب؟&nbsp;<a href="login.html">تسجيل الدخول</a></p>
+                <p style="text-align: center;">هل لديك حساب؟&nbsp;<a href="{% url 'medicalAnalysis:login_home' %}">تسجيل الدخول</a></p>
                 <p class="text-center" style="font-size: 25px;">اختر نوع الحساب</p>
                 <div>
                     <ul class="nav nav-pills d-flex d-sm-flex d-md-flex justify-content-center justify-content-sm-center justify-content-md-center" role="tablist">
@@ -27,7 +27,7 @@
                     <div id="tooltip" style="color: #0d6efd;"></div>
                     
                     <div class="tab-content" style="margin-top: 24px;">
-                            
+                                
                         <div class="tab-pane fade fade show" role="tabpanel" id="tab-1" >
                             <form class="text-center"  method="post">
                                 {% csrf_token %}
@@ -95,19 +95,15 @@
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"></div>
                             </form>
                         </div>
+                        
                         <div class="tab-pane fade fade" role="tabpanel" id="tab-2">
-                            <form class="text-center"  method="post">
+                            <form class="text-center"  method="post"enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;">
                                     <span class="d-lg-flex justify-content-lg-center input-group-text input-group-text" style="width: 180px;">اسم المختبر</span>
                                     {{ form3.name|as_crispy_field }}
                                     
                                     {% comment %} <input class="form-control form-control" required="true" type="text" name="labName"> {% endcomment %}
-                                </div>
-                                <div class="input-group" style="margin: 0px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"><span class="input-group-text input-group-text" style="width: 180px;margin-bottom: 8px;">الصوره الشخصيه للمختبر</span>
-                                    {{ form3.image|as_crispy_field }}
-                                    
-                                    {% comment %} <input class="form-control form-control" type="file"  style="margin: 0px;margin-bottom: 8px;" name="LLogo"> {% endcomment %}
                                 </div>
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"><span class="d-lg-flex justify-content-lg-center input-group-text input-group-text" style="width: 180px;margin-bottom: -7px;">المحافظة</span>
                                     {{ form3.city|as_crispy_field }}
@@ -143,7 +139,18 @@
                                     {% comment %} <input class="form-control form-control" type="password" name="LConfirmPassword" required="true" id="LConfirmPassword"> {% endcomment %}
                                 </div>
                                 <div class="text-center"><p id="confermmassage2" style="color: rgb(176, 42, 55);"></p></div>
-                                
+                                {% for field in form %}
+                                        {% if field.errors %}
+                                            <ul class="errorlist">
+                                                {% for error in field.errors %}
+
+                                                <li>{{ field }}</li>
+                                                    <li>{{ error }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    {% endfor %}
+
                                 <button class="btn btn-primary" type="submit" style="margin-top: 12px;width: 256px;background: rgb(13,110,253);">الانضمام الينا</button>
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"></div>
                             </form>
@@ -216,16 +223,70 @@
                                 
                                 <button class="btn btn-primary" type="submit" style="margin-top: 12px;width: 256px;background: rgb(13,110,253);">الانضمام الينا</button>
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"></div>
-                           
+                                
                             </form>
+                        
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>    
         <div class="col">
-            <div class="p-xl-5 m-xl-5"><img class="rounded img-fluid w-100 fit-cover" style="min-height: 300px;" src="{% static 'assets/img/Sign.svg'%}"></div>
+            <div class="p-xl-5 m-xl-5"><img class="rounded img-fluid w-100 fit-cover" style="min-height: 300px;" src="{% static 'assets/img/Sign up-bro 1.svg' %}"></div>
         </div>
     </div>
 </div>
+
+<script>
+
+       
+    /////////////////////hover
+    
+    const tooltip = document.getElementById('tooltip');
+    
+    function showTooltip(content) {
+      
+      tooltip.innerHTML = content;
+      tooltip.style.top = event.clientY + 'px';
+      tooltip.style.left = event.clientX + 'px';
+    
+      // Show the tooltip
+      tooltip.classList.add('active');
+    }
+    
+    function hideTooltip() {
+      // Hide the tooltip
+      tooltip.classList.remove('active');
+    }
+    
+    
+    
+    var password1=document.getElementById("PPassword");
+    var password2=document.getElementById("PConfirmPassword");
+    password2.onmouseleave=()=>{
+        if(password2.value !=password1.value){
+            document.getElementById("confermmassage1").innerHTML="كلمة المرور غير مطابقة لتأكيد كلمة المرور"
+        }
+    }
+    
+    
+    
+    var password3=document.getElementById("LPassword");
+    var password4=document.getElementById("LConfirmPassword");
+    password4.onmouseleave=()=>{
+        if(password4.value !=password3.value){
+            document.getElementById("confermmassage2").innerHTML="كلمة المرور غير مطابقة لتأكيد كلمة المرور"
+        }
+    }
+    
+    
+    var password5=document.getElementById("DPassword");
+    var password6=document.getElementById("DConfirmPassword");
+    password6.onmouseleave=()=>{
+        if(password6.value !=password5.value){
+            document.getElementById("confermmassage3").innerHTML="كلمة المرور غير مطابقة لتأكيد كلمة المرور"
+        }
+    }
+</script>
+
 {% endblock %}

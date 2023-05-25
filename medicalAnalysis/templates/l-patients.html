@@ -1,0 +1,52 @@
+{% extends 'lab_specialist.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %} 
+{% block body %}
+<div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center" ln="ar" dir="rtl">
+    <div><img class="d-lg-flex justify-content-lg-center align-items-lg-center" src="{% static 'assets/img/Reading%20list-rafiki.svg' %}" style="width: 300px;"></div>
+    <div class="d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+        <h2 class="text-center" style="margin: 6px;">سجل التحاليل الطبي</h2>
+        <div class="input-group mb-3">
+            <input class="form-control form-control" type="text" id="search-input" onkeyup="searchTable()" aria-label="Search" aria-describedby="button-addon2" style="width: 500px;">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">بحث&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search" >
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                </svg></button></div>
+    </div>
+    <div class="table-responsive" style="margin: 12px;">
+        <table class="table table-hover" id="my-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" onclick="checkToggle(this)"></th>
+                    <th>اسم التحليل</th>
+                    <th>نوع التحليل</th>
+                    <th>التاريخ</th>
+                    <th><a href="{% url 'medicalAnalysis:upload_test' %}" >ارسال نتيجة التحاليل</a><i class="fa fa-send text-primary"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for test in tests %}
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>{{test.title}}</td>
+                                {% comment %} {% if test.result ==None  %}<td>جاري التحميل </td> {% endcomment %}
+                                {% comment %} {% else %}<td>{{test.result}} </td>{% endif %}  {% endcomment %} 
+
+                                <td>{{test.test_type}} </td>
+                                <td>{{test.upload_date}}</td>
+                                <td> 
+                                    <a href="#" style="padding: 8px;" data-bs-target="#modal-delete-account" data-bs-toggle="modal">عرض</a>
+                                </td>
+
+                                    <td> 
+                                    <a class="link-danger" href="#" onclick="deleteRow(this)">حذف</a>
+                                </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock body %}

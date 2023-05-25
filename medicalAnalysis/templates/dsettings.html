@@ -1,0 +1,92 @@
+{% extends 'doctor.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %} 
+{% block body %}
+<div class="col" id="myForm">
+    <div class="container-fluid">
+        <div class="row g-0 flex-column gutters" style="margin-top: 16px;">
+            <div class="col-11 align-self-center">
+                <div class="row gutters" style="margin-top: 8px;">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <h6 class="text-primary mb-2">معلومات الطبيب</h6>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group"><label class="form-label" for="doctorName">اسم الطبيب</label>
+                            {{ form.first_name|as_crispy_field }}
+                            
+                            {% comment %} <input type="text" id="doctorName" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group"><label class="form-label" for="gender">النوع</label>
+                            {{ form.gender|as_crispy_field }}
+                            
+                            {% comment %} <input type="text" id="gender" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="form-group"><label class="form-label" for="state">المحافظة</label>
+                            {{ form.city|as_crispy_field }}
+                            
+                            {% comment %} <input type="text" id="state" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group"><label class="form-label" for="doctorPhone">رقم الهاتف</label>
+                            {{ form.phone|as_crispy_field }}
+                            
+                            {% comment %} <input type="tel" id="doctorPhone" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutters" style="margin-top: 8px;">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <h6 class="text-primary mt-3 mb-2">معلومات تسجيل الدخول</h6>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group"><label class="form-label" for="userName">اسم المستخدم</label>
+                            {{ form.username|as_crispy_field }}
+                            
+                            {% comment %} <input type="text" id="userName" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group"><label class="form-label" for="doctorEmail">البريد الالكتروني</label>
+                            {{ form.email|as_crispy_field }}
+                            
+                            {% comment %} <input type="email" id="doctorEmail" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group"><label class="form-label" for="password">كلمة المرور</label>
+                            {{ form.password1|as_crispy_field }}
+                            
+                            {% comment %} <input type="password" id="password" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group"><label class="form-label" for="passwordConfirmation">تأكيد كلمة المرور</label>
+                            {{ form.password2|as_crispy_field }}
+                            
+                            {% comment %} <input type="password" id="passwordConfirmation" class="form-control" readonly=""> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutters">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-top: 16px;">
+                        <div class="text-right">
+                            <button class="btn btn-primary" type="submit" id="submit-1" name="submit" style="margin-left: 8px;"  >تعديل البيانات</button>
+                        </form>
+                        <a class="btn btn-danger" role="button" href="{% url 'medicalAnalysis:doctor_delete' request.user.slug %}">حذف الحساب</a>
+                       
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

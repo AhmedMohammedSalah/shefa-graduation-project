@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
         ("male", "ذكر"),
         ("female", "أنثى"),)
     gender = models.CharField(
-        max_length=10, choices=user_gender, default="male")
+        max_length=10, choices=user_gender, default="male", null=True, blank=True)
     birth_date = models.DateField(
         auto_now=False, auto_now_add=False, null=True, blank=True)
     nid = models.CharField(max_length=14, null=True, blank=True)

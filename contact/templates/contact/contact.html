@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %} 
+{% load static %}
+{% block body %}
+<div class="row d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+  <div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center"><img src="{% static 'assets/img/Contact%20us-amico.svg' %}" style="width: 400px;margin: 12px;">
+      <div class="card mb-5" dir="rtl" ln="ar">
+          <div class="card-body p-sm-5" style="width: 930px;margin: 8px;">
+              <h2 class="text-center mb-4">تواصل معنا</h2>
+              <form method="post">
+                {% csrf_token %}
+                  <div class="mb-3">
+                      {% comment %} {{ form.name|as_crispy_field }} {% endcomment %}
+
+                    <input class="form-control form-control" type="text" id="name-2" name="name" placeholder="الاسم" required>
+                  </div>
+                  <div class="mb-3">
+                    
+                                   
+
+                    <input class="form-control form-control" type="email" id="email-2" name="email" placeholder="البريد الالكتروني" required>
+                  </div>
+                  <div class="mb-3">
+                                    {% comment %} {{ form.message|as_crispy_field }} {% endcomment %}
+
+                    <textarea class="form-control form-control" id="message-2" name="message" rows="6" placeholder="الرسالة"></textarea>
+                  </div>
+                  <div>
+                    <button class="btn d-block w-100" style="background-color: #049DD9;color: white; " type="submit">ارسال</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+  {% endblock body %}
+    

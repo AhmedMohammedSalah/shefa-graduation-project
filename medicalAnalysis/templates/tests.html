@@ -1,0 +1,161 @@
+{% extends 'doctor.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% comment %} front salwa  {% endcomment %}
+<div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+    <div style="width: 300px;"><img src="{% static 'assets/img/Online Review-rafiki.svg' %}" style="margin-bottom: 8px;"></div>
+    <div style="margin-bottom: 8px;">
+        <h2 class="text-center" style="color: #049DD9;">مرحباً بك في تقييم التقارير الطبيه</h2>
+       
+      
+
+        <div class="container" style="max-width: 800px; margin: 0 auto;  display: flex; flex-wrap: wrap;justify-content: space-between;
+        align-items: center;
+        margin-top: 50px;">
+        {% for test in tests %}
+            <div class="review-card">
+                <h3 style="	margin-top: 0;">{{test.title}}</h3>
+                <img src="/media/{{test.image}}" alt="نتيجة التحليل" style="color: #049DD9;">
+                <p style="margin-bottom: 0;">{{test.result}}</p>
+                <a href="{% url 'medicalAnalysis:result_review' test.id %}" onclick="showImage()">تقييم؟</a>
+            </div>
+        {%endfor%}
+    
+            <div class="review-card">
+                <h3 style="	margin-top: 0;">تحليل انيميا</h3>
+                <img src="" alt="نتيجة التحليل" style="color: #049DD9;">
+                <p style="margin-bottom: 0;">عزيزي المستخدم نحن تنبأنا بوجود انيميا ولا بد من الذهاب الي الطبيب</p>
+               <a href="#" onclick="showImage()">تقييم؟</a>
+            </div>
+
+            <div class="review-card">
+                <h3 style="	margin-top: 0;">تحليل انيميا</h3>
+                <img src="" alt="نتيجة التحليل" style="color: #049DD9;">
+                <p style="margin-bottom: 0;">عزيزي المستخدم نحن تنبأنا بعدم وجود انيميا</p>
+                <a href="" onclick="showImage()">تقييم؟</a>
+            </div>
+        </div>
+    
+
+
+</div>
+{% block body %}
+
+
+
+{% comment %} code  {% endcomment %}
+        <div class="col d-xl-flex flex-column justify-content-xl-center align-items-xl-center">
+            <div>
+                <h2 class="text-center" style="margin-bottom: 16px;">مرحبا بك في السجل الطبي</h2>
+            </div>
+            <div style="margin: 16px;margin-bottom: 8px;">
+                <div class="input-group mb-3">
+                    <input class="form-control form-control" type="text" id="search-input" onkeyup="searchTable()" aria-label="Search" aria-describedby="button-addon2" style="width: 500px;">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">بحث&nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-search" >
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                        </svg></button></div>
+            </div>
+            <div class="table-responsive" style="margin: 16px;">
+                <table class="table table-hover" id="my-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>اسم التحليل</th>
+                            <th>نوع التحليل</th>
+                            <th>التاريخ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for test in tests %}
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>{{test.title}}</td>
+                                {% comment %} {% if test.result ==None  %}<td>جاري التحميل </td> {% endcomment %}
+                                {% comment %} {% else %}<td>{{test.result}} </td>{% endif %}  {% endcomment %} 
+
+                                <td>{{test.test_type}} </td>
+                                <td>{{test.upload_date}}</td>
+                                <td> 
+                                    <a href="{% url 'medicalAnalysis:result_review' test.id %}" style="padding: 8px;" >عرض</a>
+                                </td>
+
+                                    <td> 
+                                    <a class="link-danger" href="#" onclick="deleteRow(this)">حذف</a>
+                                </td>
+                                <div class="modal fade" role="dialog" tabindex="-1" id="modal-delete-account">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">نتيجة التحاليل</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                                                    
+                                            </div>
+                                            <div class="modal-body">
+                                                <div style="width: 50px; height: 50px; background-color: gray;">
+                                      
+                                                </div>
+                                                <h1>{{test.id}}</h1>
+    
+                                            </div>
+                                            <div class="modal-footer d-flex d-xxl-flex justify-content-center justify-content-xxl-center"></div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </tr>
+                            
+                        {% endfor %}
+                            
+
+                    </tbody>
+                </table>
+            </div>
+
+            
+        
+
+        
+        </div>
+    </div>
+
+
+
+    <script>
+
+
+
+        function searchTable() {
+			var input, filter, table, tr, td, i, j;
+			input = document.getElementById("search-input");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("my-table");
+			tr = table.getElementsByTagName("tr");
+
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td");
+				for (j = 0; j < td.length; j++) {
+					if (td[j] && td[j].textContent) {
+						if (td[j].textContent.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+							break;
+						} else {
+							tr[i].style.display = "none";
+                            
+						}
+					}
+				}
+			}
+		}
+
+
+
+        ///delete row
+
+        function deleteRow(btn) {
+            var row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            }
+    </script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js'%}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js'%}"></script>
+
+{% endblock body %}

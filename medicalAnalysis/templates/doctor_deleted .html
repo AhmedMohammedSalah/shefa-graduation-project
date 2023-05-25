@@ -1,0 +1,26 @@
+{% extends 'doctor.html' %}
+{% load static %}
+{% block body %}
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">حذف الحساب</h4>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex d-xxl-flex justify-content-center justify-content-xxl-center" style="margin-bottom: 16px;"></div>
+            <p>هل تريد حذف الحساب؟ <strong><span style="color: rgb(176, 42, 55);">لا يمكنك التراجع بعد تنفيذ هذه الخطوة.</span></strong></p>
+            <div class="text-center"><p id="deletemassage" style="color: rgb(176, 42, 55);"></p></div>
+        </div>
+        <div class="modal-footer d-flex d-xxl-flex justify-content-center justify-content-xxl-center">
+            <form method="POST" class="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-danger"id="deletebutton">حذف الحساب</button>
+            </form>
+        </div>
+   </div>
+
+{% comment %} <h1>Lab Deleted Succesfully </h1> {% endcomment %}
+{% endblock body %}
+

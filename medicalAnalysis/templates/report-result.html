@@ -1,0 +1,86 @@
+{% extends 'patient.html' %}
+{% load static %}
+{% block body %}
+  
+
+    <div class="row g-0 row flex-nowrap">
+                <div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+    
+                    <div style="width: 200px; margin-top: 40px;" ><img src="{% static 'assets/img/Chat bot-amico.svg' %}" ></div>
+                   
+                    <div class="col-md-6 d-md-flex flex-column justify-content-lg-center">
+                        <br><br><br>
+                        <div class="text-center">
+                            <h3 class="text-uppercase fw-bold text-center">مرحباً بك في <span style="color: #049DD9;">محلل التقارير الطبيه </span>باستخدام الذكاء الاصطناعي</h3>
+                          
+                                <div class="container" style="max-width: 800px; margin: 140px;  display: flex; flex-wrap: wrap;justify-content: space-between;
+                                                align-items: center;
+                                                margin-top: 50px;">
+                                <div class="review-card">
+                                    <h3 style="	margin-top: 0;">تحليل انيميا</h3>
+                                    <img src="/media/{{test.image}}" alt="نتيجة التحليل" style="color: #049DD9;width:200px;height:200px;">
+                                    <p style="margin-bottom: 0;">{{test.result}}</p>
+                                    {% if test.rate1 %}
+                                    
+                                        <p><strong>  تمت مراجعة هذا التقرير بواسطة:د .</strong> {{test.reviewed_by.first_name}}</p>
+                                        <h3>{{test.review}}</h3>
+                                        {% if test.rate5 %}
+                                            
+                                        <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                        <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                        <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                        <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                        <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                        {% else %}
+                                            {% if test.rate4  %}
+                                            <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                            <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                            <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                            <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                            <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                            {% else %}
+                                                {% if test.rate3 %}
+                                                <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                                <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                                <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                                <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                {% else %}
+                                                    {% if test.rate2 %}
+                                                    <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                    {% else %}
+                                                    <i class="fa-solid fa-star" style="color: #eaed0c;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                    <i class="fa-solid fa-star" style="color: #dedede;"></i>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                            {% endif %}
+                                            {% endif %}
+                                        
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+                </div>    
+    </div>
+        
+   
+    <script>
+        //////////////////////logout
+        function logout() {
+          window.location.href = "../Homepage/Home.html";
+
+
+          
+      }
+  </script>
+  <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+
+  {% endblock body %}

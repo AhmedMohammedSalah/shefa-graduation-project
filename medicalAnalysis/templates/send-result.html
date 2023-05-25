@@ -1,0 +1,135 @@
+{% extends 'lab_specialist.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %} 
+{% block body %}
+
+
+
+        <div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+            <div style="width: 200px;"><img src="{% static 'assets/img/Upload-amico.svg' %}" style="margin-bottom: 8px;"></div>
+            <div style="margin-bottom: 8px;">
+                <h2 class="text-center">ارسال تحليل جديد</h2>
+               </div><br>
+    
+               <div class="d-lg-flex flex-column align-items-lg-center" style="margin-bottom: 16px;">
+                {% comment %}  {% endcomment %}
+                <div class="d-lg-flex flex-column align-items-lg-center" style="margin-bottom: 16px;">
+                    <form style="background: #d7d5d5;width: 500px;height: 300px;margin: 30px;"enctype="multipart/form-data"method="post">
+                        {% csrf_token %}
+                        <input name="username" class="form-control form-control" type="text" id="search-input" onkeyup="searchTable()" aria-label="Search" aria-describedby="button-addon2" placeholder=" ادخل اسم المريض (username )" style="margin-top: 20px; width: 500px;">
+                        
+                        <span style="margin: 12px;">غير موجود؟&nbsp;&nbsp;
+                            <a href="{% url 'medicalAnalysis:add_patient' %}" >اضافة مريض جديد</a></span>
+                        <br>
+                        {{ form.title|as_crispy_field }}
+                        {{ form.image|as_crispy_field }}
+        
+        
+                        <button class="btn btn-primary" type="submit" style="margin: 12px;">ارسال نتيجة التحاليل&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-send">
+                            <path fill-rule="evenodd" d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"></path>
+                        </svg></button>
+                        <ul>
+                            {% for message in messages %}
+                              <li
+                                {% if message.tags %} 
+                                class="{{ message.tags }}"
+                                {% endif %} style="color:red">{{ message }}</li>
+                            {% endfor %}
+                          </ul>
+                    </form>
+                {% comment %}  {% endcomment %}
+                <form style="background: #d7d5d5;width: 600px;height: 300px;margin: 30px;" method="post" action="" id="content-3">
+                    
+
+                            
+                    
+                        <form style="background: #d7d5d5;width: 400px;height: 100px;margin: 30px;"><input class="form-control" type="file" style="margin: 30px 0px;"></form>
+                    
+                </form>
+            </div>
+                
+        </div>
+
+    
+    
+
+    <script>
+        //////////////////////logout
+        function logout() {
+          window.location.href = "../Homepage/Home.html";
+        }
+
+          
+      function searchTable() {
+          var input, filter, table, tr, td, i, j;
+          input = document.getElementById("search-input");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("my-table");
+          tr = table.getElementsByTagName("tr");
+
+          for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td");
+              for (j = 0; j < td.length; j++) {
+                  if (td[j] && td[j].textContent) {
+                      if (td[j].textContent.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                          break;
+                      } else {
+                          tr[i].style.display = "none";
+                          
+                      }
+                  }
+              }
+          }
+      }
+
+
+
+      ///////////////send
+
+
+      function searchData() {
+          var input, filter, table, tr, td, i, j;
+          input = document.getElementById("sendd");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("modal-1");
+          tr = table.getElementsByTagName("tr");
+
+          for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td");
+              for (j = 0; j < td.length; j++) {
+                  if (td[j] && td[j].textContent) {
+                      if (td[j].textContent.toUpperCase().indexOf(filter) > -1) {
+                          tr[i].style.display = "";
+                          break;
+                      } else {
+                          tr[i].style.display = "none";
+                          
+                      }
+                  }
+              }
+          }
+      }
+
+
+
+      ///delete row
+
+      function deleteRow(btn) {
+          var row = btn.parentNode.parentNode;
+          row.parentNode.removeChild(row);
+          }
+      
+
+
+          ////////////  select all check box
+          function checkToggle(source) {
+          var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+          for (var i = 0; i < checkboxes.length; i++) {
+              if (checkboxes[i] != source)
+                  checkboxes[i].checked = source.checked;
+          }
+      }
+
+{% endblock body %}

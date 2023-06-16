@@ -34,23 +34,6 @@ class TestCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         if self.request.user.is_patient:
             form.instance.user = self.request.user
-            # image=form.instance.image.path
-            # print(image)
-            # age=self.request.user.age
-            # gender=self.request.user.gender
-            # if gender=="male":
-            #     g=0
-            # else:
-            #     g=1
-            
-            # ageGender=[age,g]
-            # res=update_result(image,ageGender )
-            # if res ==0 :
-            #     form.instance.result = "انت بصحة جيدة والنتيجة سلبية "
-            # elif res==1:
-            #     form.instance.result = "انت بحاجة لزيارة الطبيب   والنتيجة ايجابية  "
-            # else:
-            #     form.instance.result = "هذا التحليل غير مدعوم لدينا "
         else:
             username = self.request.POST.get('username')
             try:
@@ -58,14 +41,16 @@ class TestCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
                 form.instance.user = user
             except CustomUser.DoesNotExist:
                 messages.error(self.request, 'المريض غير موجود من فضلك قم باضافته ')
+    
                 return self.form_invalid(form) 
-        return super().form_valid(form)
-
+        response= super().form_valid(form)
+        update_result(self.object)
+        return response
     def test_func(self):
         return self.request.user.is_patient or self.request.user.is_lab_specialist
 
     def get_success_url(self):
-        return reverse('medicalAnalysis:login_home')
+        return reverse('medicalAnalysis:result', args=(self.object.id,))
     def get_template_names(self):
         if self.request.user.is_patient:
             template_names = ['upload_test.html']

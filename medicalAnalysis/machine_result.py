@@ -8,11 +8,12 @@ import cv2
 import joblib
 
 
-def anemiaPredict(gender, list):
-    parameters = gender+list
+def anemiaPredict(gender: list, list):
+    parameters = [gender[1]] + list
     fileName = '/home/ahmed/Desktop/@work/Django Projects/shefa-graduation-project/shefa-board-new/src/medicalAnalysis/anemia_model.joblib'
+    type="تحليل انيميا "
     anemiaModel = joblib.load(fileName)
-    return anemiaModel.predict([parameters])[0]
+    return anemiaModel.predict([parameters])[0],type
 
 
 def liverFailurePredict(ageGender, list):
@@ -20,7 +21,9 @@ def liverFailurePredict(ageGender, list):
     parameters = [ageGender[0]]+list+gender
     fileName = '/home/ahmed/Desktop/@work/Django Projects/shefa-graduation-project/shefa-board-new/src/medicalAnalysis/liver_model.joblib'
     liverModel = joblib.load(fileName)
-    return liverModel.predict([parameters])[0]
+    type="تحليل فشل كلوي  "
+            
+    return liverModel.predict([parameters])[0],type
 
 # 1
 
@@ -86,24 +89,38 @@ def choose_test_to_extract(features, ageGender):
         'mch': ['mch', 'mean corpuscular hemoglobin', 'm.c.h'],
         'mchc': ['mchc', 'mean corpuscular hemoglobin concentration', 'm.c.h.c'],
         'mcv': ['mcv', 'mean corpuscular volume', 'm.c.v'],
-    }   
+    }
+    lft_feature_keywords = {
+        'total bilirubin': ['tbil', 'tb'],
+        'direct bilirubin': ['dbil', 'db'],
+        'alkaline phosphatase': ['alp'],
+        'alanine aminotransferase': ['alt', 'sgpt'],
+        'aspartate aminotransferase': ['ast', 'sgot'],
+        'total proteins': ['tp', 'total protein'],
+        'albumin': ['alb'],
+        'A/G ratio': ['ag ratio'],
+    }
     for feature in features:
         if any(cbc_item in feature.lower() for cbc_item in cbc_keywords):
             print("CBC test detected")
             cbc = extract_features(features, parameter_types_cbc)
-            return anemiaPredict(cbc, ageGender)
+            # print (cbc)
+            return anemiaPredict(ageGender, cbc)
 
         elif any(lft_item in feature.lower() for lft_item in lft_keywords):
+
             print("LFT test detected")
 
             lft = extract_features(features, lft_feature_keywords)
-            return liverFailurePredict(lft, ageGender)
+            return liverFailurePredict(ageGender, [0.9, 0.3, 202.0, 22.0, 19.0, 7.4, 4.1, 1.20])
+            return liverFailurePredict(ageGender, lft)
 
     # No matching test type was found
-    return -1  # "This type of test is not supported"
+    
+    return -1,"هذا التحليل غير مدعوم "  # "This type of test is not supported"
 
 
-def update_result(image, ageGender):
+def result(image, ageGender):
 
     img = cv2.imread(image)
 
@@ -133,36 +150,36 @@ def update_result(image, ageGender):
 
     result = choose_test_to_extract(words, ageGender)
     return result
+
+
 # result
 # extract_features(words, feature_keywords):
 # return features
 # def choose_test_to_extract(features,ageGender):
 # ageGender : from DB [age,Gender]
-tests = MedicalTest.objects.all()
-
-for test in tests:
+def update_result (test:MedicalTest):
     if test.user.is_patient:
-        image=test.image.path
+        image = test.image.path
         print(image)
-        age=test.user.age
-        gender=test.user.gender
-        if gender=="male":
-            g=0
+        age = test.user.age
+        gender = test.user.gender
+        if gender == "male":
+            g = 0
         else:
-            g=1
+            g = 1
+    # [0.7,0.1,187.0,16.0,18.0,6.8,3.3,0.90]
+    # [0.9,0.3,202.0,22.0,19.0,7.4,4.1,1.20]
+        ageGender = [age, g]
+        res ,test.test_type= result(image, ageGender)
+        test.save()
         
-        ageGender=[age,g]
-        res=update_result(image,ageGender )
-        print(res)
-        print (test.title)
-        if res ==0 :
+        if res == 0:
             test.result = "انت بصحة جيدة والنتيجة سلبية "
             test.save()
-        elif res==1:
+        elif res == 1:
             test.result = "انت بحاجة لزيارة الطبيب   والنتيجة ايجابية  "
             test.save()
-            
+
         else:
             test.result = "هذا التحليل غير مدعوم لدينا "
             test.save()
-            

@@ -6,23 +6,18 @@ import pandas as pd
 import cv2
 # import tesseract
 import joblib
-
-
 def anemiaPredict(gender: list, list):
     parameters = [gender[1]] + list
     fileName = '/home/ahmed/Desktop/@work/Django Projects/shefa-graduation-project/shefa-board-new/src/medicalAnalysis/anemia_model.joblib'
-    type="تحليل انيميا "
+    type="تحليل الدم الشامل  "
     anemiaModel = joblib.load(fileName)
     return anemiaModel.predict([parameters])[0],type
-
-
 def liverFailurePredict(ageGender, list):
     gender = [1, 0] if ageGender[1] == 1 else [0, 1]
     parameters = [ageGender[0]]+list+gender
     fileName = '/home/ahmed/Desktop/@work/Django Projects/shefa-graduation-project/shefa-board-new/src/medicalAnalysis/liver_model.joblib'
     liverModel = joblib.load(fileName)
     type="تحليل فشل كلوي  "
-            
     return liverModel.predict([parameters])[0],type
 
 # 1
@@ -77,58 +72,44 @@ def extract_features(words, feature_keywords):
                         current_index += 1
         if feature_values:
             features.extend(feature_values)
+    print (features)
     return features
 
 
 def choose_test_to_extract(features, ageGender):
-    # Define the keywords to look for in each feature
-    cbc_keywords = ['cbc', 'complete', 'blood ', 'hematology ']
-    lft_keywords = ['lft', 'liver', 'function ', 'biochemistry ']
+    cbc_keywords = ['cbc', 'complete', 'blood ', 'hematology ','mcv']
+    lft_keywords = ['lft', 'liver', 'function ', 'biochemistry','A/G ratio', 'sgpt']
     parameter_types_cbc = {
-        'hgb': ['hgb', 'haemoglobin', 'hemoglobin'],
-        'mch': ['mch', 'mean corpuscular hemoglobin', 'm.c.h'],
+        'hgb': ['hgb', 'haemoglobin', 'hemoglobin'],'mch': ['mch', 'mean corpuscular hemoglobin', 'm.c.h'],
         'mchc': ['mchc', 'mean corpuscular hemoglobin concentration', 'm.c.h.c'],
         'mcv': ['mcv', 'mean corpuscular volume', 'm.c.v'],
     }
     lft_feature_keywords = {
-        'total bilirubin': ['tbil', 'tb'],
-        'direct bilirubin': ['dbil', 'db'],
-        'alkaline phosphatase': ['alp'],
-        'alanine aminotransferase': ['alt', 'sgpt'],
-        'aspartate aminotransferase': ['ast', 'sgot'],
-        'total proteins': ['tp', 'total protein'],
-        'albumin': ['alb'],
-        'A/G ratio': ['ag ratio'],
+        'total bilirubin': ['tbil', 'tb'],'direct bilirubin': ['dbil', 'db'],'alkaline phosphatase': ['alp'],
+        'alanine aminotransferase': ['alt', 'sgpt'],'aspartate aminotransferase': ['ast', 'sgot'],
+        'total proteins': ['tp', 'total protein'],'albumin': ['alb'],'A/G ratio': ['ag ratio'],
     }
     for feature in features:
         if any(cbc_item in feature.lower() for cbc_item in cbc_keywords):
             print("CBC test detected")
             cbc = extract_features(features, parameter_types_cbc)
-            # print (cbc)
+            print (cbc)
+            if (cbc==[]):
+                return -1,"هذا التحليلتم رفعه بجودة سيءة من فضلك اعد رفع  بجودة احسن   "
             return anemiaPredict(ageGender, cbc)
-
         elif any(lft_item in feature.lower() for lft_item in lft_keywords):
-
             print("LFT test detected")
-
             lft = extract_features(features, lft_feature_keywords)
-            return liverFailurePredict(ageGender, [0.9, 0.3, 202.0, 22.0, 19.0, 7.4, 4.1, 1.20])
+            if (lft==[]):
+                return -1,"هذا التحليل تم رفعه بجودة سيئة من فضلك اعد رفع  بجودة احسن   "
             return liverFailurePredict(ageGender, lft)
-
-    # No matching test type was found
-    
-    return -1,"هذا التحليل غير مدعوم "  # "This type of test is not supported"
+    return -1,"هذا التحليل غير مدعوم "  
 
 
 def result(image, ageGender):
-
     img = cv2.imread(image)
-
-    # Convert the image to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
     text = pytesseract.image_to_string(gray)
-
     words = text.split()
     parameter_types_cbc = {
         'hgb': ['hgb', 'haemoglobin', 'hemoglobin'],
@@ -146,8 +127,6 @@ def result(image, ageGender):
         'albumin': ['alb'],
         'A/G ratio': ['ag ratio'],
     }
-    # features=extract_features(words, feature_keywords)
-
     result = choose_test_to_extract(words, ageGender)
     return result
 
@@ -167,19 +146,15 @@ def update_result (test:MedicalTest):
             g = 0
         else:
             g = 1
-    # [0.7,0.1,187.0,16.0,18.0,6.8,3.3,0.90]
-    # [0.9,0.3,202.0,22.0,19.0,7.4,4.1,1.20]
         ageGender = [age, g]
         res ,test.test_type= result(image, ageGender)
         test.save()
-        
         if res == 0:
             test.result = "انت بصحة جيدة والنتيجة سلبية "
             test.save()
         elif res == 1:
             test.result = "انت بحاجة لزيارة الطبيب   والنتيجة ايجابية  "
             test.save()
-
         else:
             test.result = "هذا التحليل غير مدعوم لدينا "
             test.save()

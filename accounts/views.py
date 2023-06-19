@@ -76,6 +76,10 @@ class CustomUserSignUpView(CreateView):
         form3.fields['password1'].widget.attrs['class'] = "form-control form-control"
         form3.fields['password1'].label = ""
         form3.fields['password1'].help_text = ""
+        # end 
+        form3.fields['manager_phone'].widget.attrs['class'] = "form-control form-control"
+        form3.fields['manager_phone'].label = ""
+        form3.fields['manager_phone'].help_text = ""
         # end
         form3.fields['password2'].widget.attrs['class'] = "form-control form-control"
         form3.fields['password2'].label = ""

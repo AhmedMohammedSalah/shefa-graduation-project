@@ -1,25 +1,51 @@
 {% extends 'patient.html' %}
 {% load static %}
-{% block body %}
-  
+{% block head %}
 
-    <div class="row g-0 row flex-nowrap">
-                <div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
+<style>.review-card {
+    width: 500px;
+    height: 300px;
+    background-color: #f2f2f2;
+    margin-left: 300px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    box-sizing: border-box;
+}</style>
+{% endblock head %}
+{% block body %}
+
+    <div class="row g-0 row flex-nowrap">  <div class="col d-lg-flex flex-column justify-content-lg-center align-items-lg-center">
     
-                    <div style="width: 200px; margin-top: 40px;" ><img src="{% static 'assets/img/Chat bot-amico.svg' %}" ></div>
-                   
-                    <div class="col-md-6 d-md-flex flex-column justify-content-lg-center">
-                        <br><br><br>
-                        <div class="text-center">
-                            <h3 class="text-uppercase fw-bold text-center">مرحباً بك في <span style="color: #049DD9;">محلل التقارير الطبيه </span>باستخدام الذكاء الاصطناعي</h3>
-                          
-                                <div class="container" style="max-width: 800px; margin: 140px;  display: flex; flex-wrap: wrap;justify-content: space-between;
-                                                align-items: center;
-                                                margin-top: 50px;">
+        <div style="width: 300px; margin-top: 40px;" ><img src="{% static 'assets/img/Chat bot-amico.svg' %}" ></div>
+       
+        <div class="col-md-6 d-md-flex flex-column justify-content-lg-center" 
+        style="width: 70%;
+        margin: 10px auto;
+        border: 1px solid #ccc;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        ">
+            <br>
+            <div class="text-center">
+                <h3 class="text-uppercase fw-bold text-center">مرحباً بك في <span style="color: #049DD9;">محلل التقارير الطبيه </span>باستخدام الذكاء الاصطناعي</h3>
+              
+                    <div class="container" style="max-width: 800px; margin: 100px;  display: flex; 
+                                    align-items: center;
+                                    ">
+                    
                                 <div class="review-card">
                                     <h3 style="	margin-top: 0;">{{test.test_type}}</h3>
                                     <img src="/media/{{test.image}}" alt="نتيجة التحليل" style="color: #049DD9;width:200px;height:200px;">
-                                    <p style="margin-bottom: 0;">{{test.result}}</p>
+                                </div>
+                                <br>
+                                    <div style="margin-left: 150px;">
+                                        <img style="width: 150px; margin-left: 10px;" src="{% static 'assets/img/Robot face.gif' %}" alt="">
+                                    
+                                        <p style="margin-bottom: 0;">عزيزي المستخدم نحن تنبأ {{test.result}}</p>
+                                        
+                                    </div>
+                          
                                     {% if test.rate1 %}
                                     
                                         <p><strong>  تمت مراجعة هذا التقرير بواسطة:د .</strong> {{test.reviewed_by.first_name}}</p>

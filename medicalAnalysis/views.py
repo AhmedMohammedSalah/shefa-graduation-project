@@ -19,7 +19,6 @@ class TestCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
     model = MedicalTest
     template_name = "upload_test.html"
     fields = ['title', 'image']
-
     error_message = None 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -30,7 +29,6 @@ class TestCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
         form.fields['title'].label = ""
         form.fields['image'].label = ""
         return form
-
     def form_valid(self, form):
         if self.request.user.is_patient:
             form.instance.user = self.request.user
@@ -48,7 +46,6 @@ class TestCreateView(UserPassesTestMixin, LoginRequiredMixin, CreateView):
         return response
     def test_func(self):
         return self.request.user.is_patient or self.request.user.is_lab_specialist
-
     def get_success_url(self):
         return reverse('medicalAnalysis:result', args=(self.object.id,))
     def get_template_names(self):

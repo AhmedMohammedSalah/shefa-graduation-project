@@ -79,18 +79,21 @@
                                     {% comment %} {% comment %} 
                                     <input class="form-control form-control" type="tel" min="10000000000" max="99999999999" name="PTelephoneNumber" required="true" 
                                     {% endcomment } {% endcomment %}
-                                    
-                                    <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"><span class="d-lg-flex justify-content-lg-center input-group-text input-group-text" style="width: 180px;height: 40px;">البريد الالكتروني</span>
-                                    {{ form.email|as_crispy_field }}
-                                    {% comment %} <input class="form-control form-control" type="email" name="PEmail" required="true"></div> {% endcomment %}
+                                
+                                <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"><span class="d-lg-flex justify-content-lg-center input-group-text input-group-text" style="width: 180px;height: 40px;">البريد الالكتروني</span>
+                                {{ form.email|as_crispy_field }}
+                                {% comment %} <input class="form-control form-control" type="email" name="PEmail" required="true"></div> {% endcomment %}
                                 </div>
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"><span class="d-lg-flex justify-content-lg-center input-group-text input-group-text" style="width: 180px;height: 40px;">كلمة المرور</span>
                                     {{ form.password1|as_crispy_field }}
-                                    {% comment %} <input class="form-control form-control" type="password" name="PPassword" required="true" id="PPassword">{% endcomment %}</div>
+                                    {% comment %} <input class="form-control form-control" type="password" name="PPassword" required="true" id="PPassword">{% endcomment %}
+                                </div>
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"><span class="d-lg-flex justify-content-lg-center input-group-text input-group-text" style="width: 180px;height: 40px;">تأكيد كلمة المرور</span>
                                     {{ form.password2|as_crispy_field }}
-                                    {% comment %} <input class="form-control form-control" type="password" name="PConfirmPassword" required="true" id="PConfirmPassword">{% endcomment %}</div>
-                                <div class="text-center"><p id="confermmassage1" style="color: rgb(176, 42, 55);"></p></div>
+                                    {% comment %} <input class="form-control form-control" type="password" name="PConfirmPassword" required="true" id="PConfirmPassword">{% endcomment %}
+                                </div>
+                                <div class="text-center"><p id="confermmassage1" style="color: rgb(176, 42, 55);"></p>
+                                </div>
                                 <button class="btn btn-primary" type="submit" style="margin-top: 12px;width: 256px;background: rgb(13,110,253);">الانضمام الينا</button>
                                 <div class="input-group" style="margin: 8px;margin-top: 0px;margin-right: 0px;margin-left: 0px;"></div>
                             </form>
@@ -230,11 +233,11 @@
                     </div>
                 </div>
             </div>
-        </div>    
-        <div class="col">
-            <div class="p-xl-5 m-xl-5"><img class="rounded img-fluid w-100 fit-cover" style="min-height: 300px;" src="{% static 'assets/img/Sign up-bro 1.svg' %}"></div>
         </div>
     </div>
+    <div class="col">
+        <div class="p-xl-5 m-xl-5"><img class="rounded img-fluid w-100 fit-cover" style="min-height: 200px;" src="{% static 'assets/img/Sign up-bro 1.svg' %}"></div>
+    </div>    
 </div>
 
 <script>
